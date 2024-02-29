@@ -1,0 +1,23 @@
+.SignUp {
+    width: 100%;
+  }
+  .top-frame {
+    background-color: black;
+    height: 30px;
+    display: flex;
+    justify-content:center;
+  }
+  .top-writing {
+    color: white;
+    display: flex;
+    flex-direction:column;
+    justify-content:center;
+  }
+  #nav-bar {
+    height: 60px;
+    display: flex;
+    justify-content:center;
+  }
+  #nav-bar-frame-1  {
+    width:70%;
+  }
