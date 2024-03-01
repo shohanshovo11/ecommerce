@@ -1,7 +1,9 @@
+import Home from "./components/Home"
+
 function App() {
   return (
     <>
-      <div className="font-serif text-2xl text-center">Ecommerce App</div>
+      <Home />
     </>
   )
 }
