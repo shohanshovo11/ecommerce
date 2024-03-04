@@ -1,0 +1,91 @@
+.Cart{
+
+}
+.Cart .container #path{
+    display: flex;
+    margin:50px;
+    
+}
+.Cart .container #writing-1{
+    color:#808080;
+}
+.Cart .container #frame-1{
+    /* border: 5px solid black; */
+    display:flex;
+    justify-content: center;
+}
+.Cart .container #frame-1 #frame-2{
+    width:80%;
+    margin-bottom: 50px;
+    /* border: 5px solid black; */
+}
+.Cart .container #frame-3{
+    display:flex;
+    justify-content: space-between;
+}
+.Cart .container #frame-3 #return-to-shop{
+    padding: 10px 30px;
+    border:1px solid black;
+    font-size:0.8em;
+    font-weight: 600;
+    border-radius: 5px;
+}
+.Cart .container #frame-3 #update-cart{
+    padding: 10px 30px;
+    border:1px solid black;
+    font-size:0.8em;
+    font-weight: 600;
+    border-radius: 5px;
+}
+th{
+    text-align:left;
+}
+.Cart .container .cell{
+    width:40%;
+    height:70px;
+    /* gap:10px; */
+}
+.Cart .container .rows{
+    margin:20px;
+}
+.Cart .container #coupon-code{
+    border: 1px solid black;
+    height:40px;
+    padding: 10px 30px;
+    outline:none;
+    border-radius: 5px;
+}
+.Cart .container #apply-coupon{
+    padding: 10px 30px;
+    font-size:0.8em;
+    font-weight: 600;
+    background-color: #DB4444;
+    color: white;
+    margin-left: 20px;
+    border-radius: 5px;
+}
+.Cart .container #frame-4{
+    display:flex;
+    justify-content: space-between;
+    margin-top: 50px;
+}
+.Cart .container #receipt{
+    width: 500px;
+    height: 300px;
+    border:1px solid black;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.Cart .container #receipt-header{
+    font-weight: 500;
+    font-size: 1.2em;
+}
+.Cart .container .receipt-rows{
+    display:flex;
+    justify-content: space-between;
+}
+.Cart .container .under-line{
+    border:1px solid #999999;
+}
