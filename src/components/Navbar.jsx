@@ -9,7 +9,7 @@ function Navbar() {
       <div className="container flex justify-between items-center">
         <div>
           <a href="/" className=" text-2xl font-bold">
-            Exclusive
+            T3CH-STATION
           </a>
         </div>
         <div className="hidden lg:block">
@@ -20,17 +20,22 @@ function Navbar() {
               </a>
             </li>
             <li>
-              <a href="/products" className="">
+              <a href="/" className="">
                 Contact
               </a>
             </li>
             <li>
-              <a href="/cart" className="">
+              <a href="/" className="">
                 About
               </a>
             </li>
             <li>
               <a href="/login" className="">
+                Login
+              </a>
+            </li>
+            <li>
+              <a href="/signup" className="">
                 Sign Up
               </a>
             </li>
