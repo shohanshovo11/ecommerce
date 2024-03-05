@@ -27,7 +27,7 @@ function Login() {
 
   return (
     <>
-      <Toaster />
+      {/* <Toaster /> */}
       <Offer />
       <Navbar />
       <div className="container">
