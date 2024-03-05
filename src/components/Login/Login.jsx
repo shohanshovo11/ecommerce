@@ -1,10 +1,34 @@
-import React from "react";
+import React, {useState} from "react";
 import Navbar from "../Navbar";
 import Footer from "../Footer";
 import Offer from "../Offer";
 import side_bar from "../../assets/img/side_image/login.svg";
-
+import Axios from "../../api/api"
 function Login() {
+  const [password,setPassword]=useState('');
+  const [email,setEmail]=useState('');
+  const handleEmailChange=(e)=>{
+    setEmail(e.target.value);
+  }
+  const handlePasswordChange=(e)=>{
+    setPassword(e.target.value);
+  }
+  const handleLogin = async (e) => {
+    e.preventDefault(); // Prevent default form submission
+    console.log("helo");
+    try {
+      // Make POST request using Axios
+      const response = await Axios.post("person/login", {
+        email: email,
+        password: password
+      });
+
+      // Handle response accordingly
+      console.log(response,"shovo"); // Log response data or do something with it
+    } catch (error) {
+      console.error("Error:", error.response.data.message); // Log any errors
+    }
+  }
   return (
     <>
       <Offer />
@@ -33,6 +57,7 @@ function Login() {
                     name="email"
                     id="email"
                     className="bg-gray-200 w-full p-2 rounded-sm"
+                    onChange={handleEmailChange}
                   />
                 </div>
                 <div className="mb-4">
@@ -47,10 +72,11 @@ function Login() {
                     name="password"
                     id="password"
                     className="bg-gray-200 w-full p-2 rounded-sm"
+                    onChange={handlePasswordChange}
                   />
                 </div>
                 <div className="flex gap-4 justify-between">
-                  <button className="btn-primary text-white p-2 rounded-sm">
+                  <button className="btn-primary text-white p-2 rounded-sm" type="submit" onClick={handleLogin} >
                     Login
                   </button>
                   <a href="/" className="text-ecom-red self-center">
