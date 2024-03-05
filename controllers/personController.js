@@ -81,4 +81,33 @@ async function getPerson(req, res, next) {
   next();
 }
 
+// POST check if email and password match and ID is verified
+router.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    // Find the person by email
+    const person = await Person.findOne({ email });
+
+    // Check if person exists
+    if (!person) {
+      return res.status(404).json({ message: "Person not found" });
+    }
+
+    // Check if password matches
+    if (person.password !== password) {
+      return res.status(401).json({ message: "Invalid password" });
+    }
+
+    // Check if person is verified
+    if (!person.verified) {
+      return res.status(403).json({ message: "Person is not verified" });
+    }
+
+    // If all checks pass, return success
+    res.status(200).json({ message: "Login successful" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 module.exports = router;
