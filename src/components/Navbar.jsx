@@ -2,6 +2,7 @@ import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { faCartArrowDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
+import { Link } from "react-router-dom";
 
 function Navbar() {
   return (
@@ -15,9 +16,9 @@ function Navbar() {
         <div className="hidden lg:block">
           <ul className="flex gap-10">
             <li>
-              <a href="/" className="">
+              <Link to="/" className="">
                 Home
-              </a>
+              </Link>
             </li>
             <li>
               <a href="/" className="">
@@ -30,14 +31,14 @@ function Navbar() {
               </a>
             </li>
             <li>
-              <a href="/login" className="">
+              <Link to="/login" className="">
                 Login
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="/signup" className="">
+              <Link to="/signup" className="">
                 Sign Up
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
@@ -68,10 +69,9 @@ function Navbar() {
             icon={faHeart}
             className="fa-xl self-center cursor-pointer"
           />
-          <FontAwesomeIcon
-            icon={faCartArrowDown}
-            className="fa-xl self-center cursor-pointer"
-          />
+          <Link to="/cart" className="self-center cursor-pointer">
+            <FontAwesomeIcon icon={faCartArrowDown} className="fa-xl" />
+          </Link>
         </div>
 
         <div className="block lg:hidden">
