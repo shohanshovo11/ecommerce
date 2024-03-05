@@ -1,4 +1,3 @@
-// app.js
 require("dotenv").config();
 const express = require("express");
 const connectDB = require("./utils/db");
@@ -10,13 +9,8 @@ const app = express();
 // Connect to the database
 connectDB();
 
-// Define CORS options
-const corsOptions = {
-  origin: "http://localhost:5173",
-};
-
 // Use CORS middleware with options
-app.use(cors(corsOptions));
+app.use(cors());
 
 // Middleware
 app.use(express.json());
