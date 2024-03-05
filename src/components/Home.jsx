@@ -37,39 +37,40 @@ function Home() {
     }
   };
 
-  const [cart,setCart]=useState([]);
-  const [flashSales,setFlashSales]=useState([]);
-  const [categories,setCategories]=useState([]);
-  const [bestSelling,setBestSelling]=useState([]);
-  const [exploreProducts,setExploreProducts]=useState([]);
+  const [cart, setCart] = useState([]);
+  const [flashSales, setFlashSales] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [bestSelling, setBestSelling] = useState([]);
+  const [exploreProducts, setExploreProducts] = useState([]);
 
-  function init(){
-    let tmpflashSales=[],tmpbestSelling=[],tmpexploreProducts=[],tmpcategories=[];
-    for(let i=0;i<8;i++){
-      tmpflashSales.push(<Card/>);
+  function init() {
+    let tmpFlashSales = [],
+      tmpBestSelling = [],
+      tmpExploreProducts = [],
+      tmpCategories = [];
+    for (let i = 0; i < 8; i++) {
+      tmpFlashSales.push(<Card />);
     }
-    for(let i=0;i<8;i++){
-      tmpcategories.push(<CategoryCard/>);
+    for (let i = 0; i < 8; i++) {
+      tmpCategories.push(<CategoryCard />);
     }
-    for(let i=0;i<8;i++){
-      tmpbestSelling.push(<Card/>);
+    for (let i = 0; i < 8; i++) {
+      tmpBestSelling.push(<Card />);
     }
-    for(let i=0;i<10;i++){
-      tmpexploreProducts.push(<Card/>);
+    for (let i = 0; i < 10; i++) {
+      tmpExploreProducts.push(<Card />);
     }
-    setFlashSales(tmpflashSales);
-    setCategories(tmpcategories);
-    setBestSelling(tmpbestSelling);
-    setExploreProducts(tmpexploreProducts);
+    setFlashSales(tmpFlashSales);
+    setCategories(tmpCategories);
+    setBestSelling(tmpBestSelling);
+    setExploreProducts(tmpExploreProducts);
   }
 
   useEffect(() => {
     init();
-  }, [flashSales]);
+  }, []);
 
-  function addToCart(){
-    
-  }
+  function addToCart() {}
   return (
     <>
       <div className="bg-black">
@@ -99,21 +100,9 @@ function Home() {
             className="gap-1 flex overflow-x-scroll relative scroll-smooth scrolling-auto"
             ref={cardContainerRef}
           >
-            {
-              flashSales.map(
-                (item,index) =>(
-                  <div>{item}</div>
-                )
-              )
-            }
-            {/* <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card /> */}
+            {flashSales.map((item, index) => (
+              <div key={index}>{item}</div>
+            ))}
           </div>
           <div className="mt-6 w-full flex">
             <button type="button" className="btn-primary mx-auto">
@@ -141,22 +130,9 @@ function Home() {
             </div>
           </div>
           <div className="flex mt-10 gap-8 p-4 overflow-x-hidden overflow-y-hidden">
-          {
-              categories.map(
-                (item,index) =>(
-                  <div>{item}</div>
-                )
-              )
-            }
-            {/* <CategoryCard />
-            <CategoryCard />
-            <CategoryCard />
-            <CategoryCard />
-            <CategoryCard />
-            <CategoryCard />
-            <CategoryCard />
-            <CategoryCard />
-            <CategoryCard /> */}
+            {categories.map((item, index) => (
+              <div key={index}>{item}</div>
+            ))}
           </div>
         </div>
         <hr className="mt-10 border-gray-300 mb-3" />
@@ -174,21 +150,9 @@ function Home() {
             </button>
           </div>
           <div className="gap-1 flex overflow-x-scroll relative scroll-smooth scrolling-auto">
-          {
-              bestSelling.map(
-                (item,index) =>(
-                  <div>{item}</div>
-                )
-              )
-            }
-            {/* <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card /> */}
+            {bestSelling.map((item, index) => (
+              <div key={index}>{item}</div>
+            ))}
           </div>
           <div className="mt-6 w-full flex">
             <button type="button" className="btn-primary mx-auto">
@@ -235,23 +199,9 @@ function Home() {
             </div>
           </div>
           <div className="grid xl:grid-cols-5 md:grid-cols-3 sm:grid-cols-2">
-          {
-              exploreProducts.map(
-                (item,index) =>(
-                  <div>{item}</div>
-                )
-              )
-            }
-            {/* <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card /> */}
+            {exploreProducts.map((item, index) => (
+              <div key={index}>{item}</div>
+            ))}
           </div>
           <div className="mt-6 w-full flex">
             <button type="button" className="btn-primary mx-auto">
