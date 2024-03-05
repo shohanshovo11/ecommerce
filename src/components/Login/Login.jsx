@@ -4,6 +4,7 @@ import Footer from "../Footer";
 import Offer from "../Offer";
 import side_bar from "../../assets/img/side_image/login.svg";
 import Axios from "../../api/api";
+import toast, { Toaster } from "react-hot-toast";
 
 function Login() {
   const handleLogin = async (e) => {
@@ -16,16 +17,17 @@ function Login() {
         email: email,
         password: password,
       });
-
-      // Handle response accordingly
+      toast.success("Successfully logged in!");
       console.log("Response:", response); // Log response data or do something with it
     } catch (error) {
       console.error("Error:", error); // Log any errors
+      toast.error("Login failed. Please try again."); // Display error toast message
     }
   };
 
   return (
     <>
+      <Toaster />
       <Offer />
       <Navbar />
       <div className="container">
