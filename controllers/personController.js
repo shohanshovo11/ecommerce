@@ -18,20 +18,36 @@ router.get("/:id", getPerson, (req, res) => {
 });
 
 // POST create a new person
+// POST create a new person
 router.post("/", async (req, res) => {
-  const person = new Person({
-    name: req.body.name,
-    email: req.body.email,
-    password: req.body.password,
-    verified: req.body.verified,
-  });
+  const { name, email, password } = req.body;
+
   try {
-    const newPerson = await person.save();
-    res.status(201).json(newPerson);
+    // Check if the email already exists
+    const existingPerson = await Person.findOne({ email });
+    if (existingPerson) {
+      return res.status(400).json({ message: "Email already exists" });
+    }
+
+    // If email is unique, create a new person
+    const newPerson = new Person({
+      name,
+      email,
+      password,
+      verified: true,
+    });
+
+    // Save the new person to the database
+    const savedPerson = await newPerson.save();
+
+    // Respond with success
+    res.status(201).json(savedPerson);
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    // Handle errors
+    res.status(500).json({ message: err.message });
   }
 });
+
 
 // PUT update a person by ID
 router.put("/:id", getPerson, async (req, res) => {
