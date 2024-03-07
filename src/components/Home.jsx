@@ -20,12 +20,13 @@ import { useNavigate } from "react-router-dom";
 
 function Home() {
   const cardContainerRef = useRef(null);
+  const categoriesRef = useRef(null);
   const [viewAllProducts, setViewAllProducts] = useState(false);
-  const navigate = useNavigate(); // Importing the useNavigate hook
+  const navigate = useNavigate();
 
-  const scrollLeft = () => {
-    if (cardContainerRef.current) {
-      cardContainerRef.current.scrollBy({
+  const scrollLeft = (ref) => {
+    if (ref.current) {
+      ref.current.scrollBy({
         left: -300,
         behavior: "smooth",
       });
@@ -46,97 +47,56 @@ function Home() {
   const [categories, setCategories] = useState([]);
   const [bestSelling, setBestSelling] = useState([]);
   const [products, setProducts] = useState([]);
+  let productsData = [];
   async function fetchData() {
-    const products = await Axios.get("product");
-    if (products.status === 200 && products.data.length > 0) {
-      setProducts(products.data);
+    try {
+      const products = await Axios.get("product");
+      productsData = products.data;
+      if (products.status === 200 && products.data.length > 0) {
+        setProducts(products.data);
+      }
+    } catch (error) {
+      console.error("Error fetching products:", error);
     }
-
-    let tmpFlashSales = [],
-      tmpBestSelling = [],
-      tmpExploreProducts = [],
-      tmpCategories = [];
-    for (let i = 0; i < 8; i++) {
-      tmpFlashSales.push(<Card />);
-    }
+    let tmpCategories = [];
     for (let i = 0; i < 8; i++) {
       tmpCategories.push(<CategoryCard />);
     }
-    for (let i = 0; i < 8; i++) {
-      tmpBestSelling.push(<Card />);
-    }
-    for (let i = 0; i < 10; i++) {
-      tmpExploreProducts.push(<Card />);
-    }
-    // setFlashSales(tmpFlashSales);
     setCategories(tmpCategories);
-    // setBestSelling(tmpBestSelling);
+    const topProducts = productsData.slice(0, 10);
+    setBestSelling(
+      topProducts.map((item) => (
+        <Card
+          key={item._id}
+          id={item._id}
+          name={item.name}
+          price={item.price}
+          previous_price={item.previous_price}
+          rating={item.rating}
+          image={item.image}
+          category={item.category}
+          stock={item.stock}
+          sell_count={item.sell_count}
+        />
+      ))
+    );
 
-    try {
-      const productsResponse = await Axios.get("product");
-      const productsData = productsResponse.data;
-
-      // Sort products based on sell_count in descending order
-      productsData.sort((a, b) => b.sell_count - a.sell_count);
-
-      // Get top 10 products
-      const topProducts = productsData.slice(0, 10);
-
-      // Set the top products to the bestSelling state
-      setBestSelling(
-        topProducts.map((item) => (
-          <Card
-            key={item._id}
-            id={item._id}
-            name={item.name}
-            price={item.price}
-            previous_price={item.previous_price}
-            rating={item.rating}
-            image={item.image}
-            category={item.category}
-            stock={item.stock}
-            sell_count={item.sell_count}
-          />
-        ))
-      );
-
-      // Handle other data like flashSales, categories, etc.
-      // ...
-    } catch (error) {
-      console.error("Error fetching products:", error);
-      // Handle error
-    }
-    try {
-      const productsResponse = await Axios.get("product");
-      const productsData = productsResponse.data;
-
-      // Sort products based on stock in ascending order
-      productsData.sort((a, b) => a.stock - b.stock);
-
-      // Get top 10 products
-      const topProducts = productsData.slice(0, 10);
-
-      // Set the top products to the flashSales state
-      setFlashSales(
-        topProducts.map((item) => (
-          <Card
-            key={item._id}
-            id={item._id}
-            name={item.name}
-            price={item.price}
-            previous_price={item.previous_price}
-            rating={item.rating}
-            image={item.image}
-            category={item.category}
-            stock={item.stock}
-            sell_count={item.sell_count}
-          />
-        ))
-      );
-    } catch (error) {
-      console.error("Error fetching products:", error);
-      // Handle error
-    }
+    setFlashSales(
+      topProducts.map((item) => (
+        <Card
+          key={item._id}
+          id={item._id}
+          name={item.name}
+          price={item.price}
+          previous_price={item.previous_price}
+          rating={item.rating}
+          image={item.image}
+          category={item.category}
+          stock={item.stock}
+          sell_count={item.sell_count}
+        />
+      ))
+    );
   }
 
   useEffect(() => {
@@ -154,10 +114,6 @@ function Home() {
       email,
     });
     console.log(data);
-    // setCart((prevCart) => ({
-    //   ...prevCart,
-    //   [productId]: prevCart[productId] ? prevCart[productId] + 1 : 1,
-    // }));
   };
 
   // Function to navigate to the all products page
@@ -200,7 +156,6 @@ function Home() {
             ))}
           </div>
           <div className="mt-6 w-full flex">
-            {/* Use handleViewAllProducts function to navigate */}
             <button
               type="button"
               className="btn-primary mx-auto"
@@ -221,15 +176,18 @@ function Home() {
               Browse By Category
             </h2>
             <div className="flex gap-2 flex-auto justify-end">
-              <button onClick={() => scrollLeft()}>
+              <button onClick={() => scrollLeft(categoriesRef)}>
                 <FontAwesomeIcon icon={faCircleLeft} size="2xl" />
               </button>
-              <button onClick={() => scrollRight()}>
+              <button onClick={() => scrollRight(categoriesRef)}>
                 <FontAwesomeIcon icon={faCircleRight} size="2xl" />
               </button>
             </div>
           </div>
-          <div className="flex mt-10 gap-8 p-4 overflow-x-scroll scroll-smooth">
+          <div
+            className="flex mt-10 gap-8 p-4 overflow-x-scroll scroll-smooth"
+            ref={categoriesRef}
+          >
             {categories.map((item, index) => (
               <div key={index}>{item}</div>
             ))}
@@ -331,7 +289,6 @@ function Home() {
               ))}
           </div>
           <div className="mt-6 w-full flex">
-            {/* Use handleViewAllProducts function to navigate */}
             <button
               type="button"
               className="btn-primary mx-auto"
