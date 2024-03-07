@@ -16,9 +16,12 @@ import {
 import CategoryCard from "./CategoryCard";
 import Footer from "./Footer";
 import Axios from "../api/api";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
   const cardContainerRef = useRef(null);
+  const [viewAllProducts, setViewAllProducts] = useState(false);
+  const navigate = useNavigate(); // Importing the useNavigate hook
 
   const scrollLeft = () => {
     if (cardContainerRef.current) {
@@ -65,16 +68,93 @@ function Home() {
     for (let i = 0; i < 10; i++) {
       tmpExploreProducts.push(<Card />);
     }
-    setFlashSales(tmpFlashSales);
+    // setFlashSales(tmpFlashSales);
     setCategories(tmpCategories);
-    setBestSelling(tmpBestSelling);
+    // setBestSelling(tmpBestSelling);
+
+    try {
+      const productsResponse = await Axios.get("product");
+      const productsData = productsResponse.data;
+
+      // Sort products based on sell_count in descending order
+      productsData.sort((a, b) => b.sell_count - a.sell_count);
+
+      // Get top 10 products
+      const topProducts = productsData.slice(0, 10);
+
+      // Set the top products to the bestSelling state
+      setBestSelling(
+        topProducts.map((item) => (
+          <Card
+            key={item._id}
+            id={item._id}
+            name={item.name}
+            price={item.price}
+            previous_price={item.previous_price}
+            rating={item.rating}
+            image={item.image}
+            category={item.category}
+            stock={item.stock}
+            sell_count={item.sell_count}
+          />
+        ))
+      );
+
+      // Handle other data like flashSales, categories, etc.
+      // ...
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      // Handle error
+    }
+    try {
+      const productsResponse = await Axios.get("product");
+      const productsData = productsResponse.data;
+
+      // Sort products based on stock in ascending order
+      productsData.sort((a, b) => a.stock - b.stock);
+
+      // Get top 10 products
+      const topProducts = productsData.slice(0, 10);
+
+      // Set the top products to the flashSales state
+      setFlashSales(
+        topProducts.map((item) => (
+          <Card
+            key={item._id}
+            id={item._id}
+            name={item.name}
+            price={item.price}
+            previous_price={item.previous_price}
+            rating={item.rating}
+            image={item.image}
+            category={item.category}
+            stock={item.stock}
+            sell_count={item.sell_count}
+          />
+        ))
+      );
+
+      // Handle other data like bestSelling, categories, etc.
+      // ...
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      // Handle error
+    }
   }
 
   useEffect(() => {
     fetchData();
   }, []);
 
+  const productsToShow = viewAllProducts ? products : products.slice(0, 10);
+
   function addToCart() {}
+
+  // Function to navigate to the all products page
+  const handleViewAllProducts = () => {
+    navigate("/allproducts");
+  };
+
   return (
     <>
       <div className="bg-black">
@@ -109,7 +189,12 @@ function Home() {
             ))}
           </div>
           <div className="mt-6 w-full flex">
-            <button type="button" className="btn-primary mx-auto">
+            {/* Use handleViewAllProducts function to navigate */}
+            <button
+              type="button"
+              className="btn-primary mx-auto"
+              onClick={handleViewAllProducts}
+            >
               View All Products
             </button>
           </div>
@@ -159,7 +244,12 @@ function Home() {
             ))}
           </div>
           <div className="mt-6 w-full flex">
-            <button type="button" className="btn-primary mx-auto">
+            {/* Use handleViewAllProducts function to navigate */}
+            <button
+              type="button"
+              className="btn-primary mx-auto"
+              onClick={handleViewAllProducts}
+            >
               View All Products
             </button>
           </div>
@@ -203,7 +293,7 @@ function Home() {
             </div>
           </div>
           <div className="grid xl:grid-cols-5 md:grid-cols-3 sm:grid-cols-2">
-            {products
+            {productsToShow
               .filter((item) => item.stock > 0) // Filter products based on stock availability
               .map((item, index) => (
                 <div key={item._id}>
@@ -222,7 +312,12 @@ function Home() {
               ))}
           </div>
           <div className="mt-6 w-full flex">
-            <button type="button" className="btn-primary mx-auto">
+            {/* Use handleViewAllProducts function to navigate */}
+            <button
+              type="button"
+              className="btn-primary mx-auto"
+              onClick={handleViewAllProducts}
+            >
               View All Products
             </button>
           </div>

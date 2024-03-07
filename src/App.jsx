@@ -7,6 +7,7 @@ import Billing from "./components/Billing/Billing";
 import Signup from "./components/SignUp/Signup";
 import Cart from "./components/Cart";
 import Quantity from "./components/Quantity";
+import AllProductsPage from "./components/AllProductsPage";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Route path="/signup" element={<Signup />} />
       <Route path="/billing" element={<Billing />} />
       <Route path="/cart" element={<Cart />} />
+      <Route path="/allproducts" element={<AllProductsPage />} />
       {/* Add more routes as needed */}
     </Routes>
   );
