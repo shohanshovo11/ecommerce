@@ -15,6 +15,7 @@ import {
 } from "@fortawesome/free-regular-svg-icons";
 import CategoryCard from "./CategoryCard";
 import Footer from "./Footer";
+import Axios from "../api/api";
 
 function Home() {
   const cardContainerRef = useRef(null);
@@ -41,9 +42,13 @@ function Home() {
   const [flashSales, setFlashSales] = useState([]);
   const [categories, setCategories] = useState([]);
   const [bestSelling, setBestSelling] = useState([]);
-  const [exploreProducts, setExploreProducts] = useState([]);
+  const [products, setProducts] = useState([]);
+  async function fetchData() {
+    const products = await Axios.get("product");
+    if (products.status === 200 && products.data.length > 0) {
+      setProducts(products.data);
+    }
 
-  function init() {
     let tmpFlashSales = [],
       tmpBestSelling = [],
       tmpExploreProducts = [],
@@ -63,11 +68,10 @@ function Home() {
     setFlashSales(tmpFlashSales);
     setCategories(tmpCategories);
     setBestSelling(tmpBestSelling);
-    setExploreProducts(tmpExploreProducts);
   }
 
   useEffect(() => {
-    init();
+    fetchData();
   }, []);
 
   function addToCart() {}
@@ -199,9 +203,23 @@ function Home() {
             </div>
           </div>
           <div className="grid xl:grid-cols-5 md:grid-cols-3 sm:grid-cols-2">
-            {exploreProducts.map((item, index) => (
-              <div key={index}>{item}</div>
-            ))}
+            {products
+              .filter((item) => item.stock > 0) // Filter products based on stock availability
+              .map((item, index) => (
+                <div key={item._id}>
+                  <Card
+                    id={item._id}
+                    name={item.name}
+                    price={item.price}
+                    previous_price={item.previous_price}
+                    rating={item.rating}
+                    image={item.image}
+                    category={item.category}
+                    stock={item.stock}
+                    sell_count={item.sell_count}
+                  />
+                </div>
+              ))}
           </div>
           <div className="mt-6 w-full flex">
             <button type="button" className="btn-primary mx-auto">
