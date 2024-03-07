@@ -17,6 +17,8 @@ import CategoryCard from "./CategoryCard";
 import Footer from "./Footer";
 import Axios from "../api/api";
 import { useNavigate } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
+
 
 function Home() {
   const cardContainerRef = useRef(null);
@@ -73,7 +75,7 @@ function Home() {
     // setBestSelling(tmpBestSelling);
 
     try {
-      const productsResponse = await Axios.get("product");
+      const productsResponse = products;
       const productsData = productsResponse.data;
 
       // Sort products based on sell_count in descending order
@@ -107,7 +109,7 @@ function Home() {
       // Handle error
     }
     try {
-      const productsResponse = await Axios.get("product");
+      const productsResponse = products;
       const productsData = productsResponse.data;
 
       // Sort products based on stock in ascending order
@@ -153,6 +155,8 @@ function Home() {
       quantity,
       email,
     });
+    toast.success("Added to Cart Successfully");
+
     console.log(data);
     // setCart((prevCart) => ({
     //   ...prevCart,
