@@ -24,11 +24,11 @@
 .scrolling-touch {
   -webkit-overflow-scrolling: touch;
 }
+@tailwind components;
+@tailwind utilities;
 .scrolling-auto {
   -webkit-overflow-scrolling: auto;
 }
-@tailwind components;
-@tailwind utilities;
 
 .no-scrollbar::-webkit-scrollbar {
   display: none;

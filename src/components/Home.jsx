@@ -19,19 +19,20 @@ import Axios from "../api/api";
 
 function Home() {
   const cardContainerRef = useRef(null);
-
-  const scrollLeft = () => {
-    if (cardContainerRef.current) {
-      cardContainerRef.current.scrollBy({
+  const productRef = useRef(null);
+  const categoriesRef = useRef(null);
+  const scrollLeft = (ref) => {
+    if (ref.current) {
+      ref.current.scrollBy({
         left: -300,
         behavior: "smooth",
       });
     }
   };
 
-  const scrollRight = () => {
-    if (cardContainerRef.current) {
-      cardContainerRef.current.scrollBy({
+  const scrollRight = (ref) => {
+    if (ref.current) {
+      ref.current.scrollBy({
         left: 300,
         behavior: "smooth",
       });
@@ -92,10 +93,10 @@ function Home() {
             <h2 className="text-3xl font-semibold self-center">Flash Sales</h2>
             <Timer />
             <div className="flex gap-2 flex-auto justify-end">
-              <button onClick={scrollLeft}>
+              <button onClick={() => scrollLeft(cardContainerRef)}>
                 <FontAwesomeIcon icon={faCircleLeft} size="2xl" />
               </button>
-              <button onClick={scrollRight}>
+              <button onClick={() => scrollRight(cardContainerRef)}>
                 <FontAwesomeIcon icon={faCircleRight} size="2xl" />
               </button>
             </div>
@@ -125,15 +126,18 @@ function Home() {
               Browse By Category
             </h2>
             <div className="flex gap-2 flex-auto justify-end">
-              <button onClick={scrollLeft}>
+              <button onClick={() => scrollLeft(categoriesRef)}>
                 <FontAwesomeIcon icon={faCircleLeft} size="2xl" />
               </button>
-              <button onClick={scrollRight}>
+              <button onClick={() => scrollRight(categoriesRef)}>
                 <FontAwesomeIcon icon={faCircleRight} size="2xl" />
               </button>
             </div>
           </div>
-          <div className="flex mt-10 gap-8 p-4 overflow-x-hidden overflow-y-hidden">
+          <div
+            className="flex mt-10 gap-8 p-4 overflow-x-scroll scroll-smooth"
+            ref={categoriesRef}
+          >
             {categories.map((item, index) => (
               <div key={index}>{item}</div>
             ))}
@@ -194,17 +198,20 @@ function Home() {
               Explore Our Products
             </h2>
             <div className="flex gap-2 flex-auto justify-end">
-              <button onClick={scrollLeft}>
+              <button onClick={() => scrollLeft(productRef)}>
                 <FontAwesomeIcon icon={faCircleLeft} size="2xl" />
               </button>
-              <button onClick={scrollRight}>
+              <button onClick={() => scrollRight(productRef)}>
                 <FontAwesomeIcon icon={faCircleRight} size="2xl" />
               </button>
             </div>
           </div>
-          <div className="grid xl:grid-cols-5 md:grid-cols-3 sm:grid-cols-2">
+          <div
+            className="gap-1 flex overflow-x-scroll relative scroll-smooth scrolling-auto"
+            ref={productRef}
+          >
             {products
-              .filter((item) => item.stock > 0) // Filter products based on stock availability
+              .filter((item) => item.stock > 0)
               .map((item, index) => (
                 <div key={item._id}>
                   <Card
