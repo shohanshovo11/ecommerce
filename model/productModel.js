@@ -4,36 +4,42 @@ const productSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
+    default: null,
   },
   price: {
     type: Number,
     required: true,
+    default: null,
   },
   previous_price: {
     type: Number,
     required: true,
-    default: 170.00,
+    default: null,
   },
   rating: {
     type: Number,
     required: true,
-    default: 4.0,
+    default: null,
   },
   image: {
     type: String,
     required: true,
+    default: null,
   },
   category: {
     type: String,
     required: true,
+    default: null,
   },
   stock: {
     type: Number,
     required: true,
+    default: null,
   },
-  cell_count: {
+  sell_count: {
     type: Number,
     required: true,
+    default: null,
   },
 });
 
