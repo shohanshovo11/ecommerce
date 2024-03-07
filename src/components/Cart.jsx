@@ -5,6 +5,7 @@ import Footer from "./Footer";
 import "./Cart.css";
 import Quantity from "./Quantity";
 import { Link } from "react-router-dom";
+import Axios from "../api/api";
 
 function Cart() {
   const [products, setProducts] = useState([
@@ -19,6 +20,21 @@ function Cart() {
       quantity: 10,
     },
   ]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await Axios.get(
+          "/cart/email/zarif.zeisan.mustafa@gmail.com"
+        );
+        console.log(response.data);
+      } catch (error) {
+        console.error("Error fetching cart data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div className="Cart">

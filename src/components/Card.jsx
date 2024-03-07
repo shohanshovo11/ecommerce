@@ -25,6 +25,7 @@ function Card(props) {
             className={`absolute z-50 bottom-0 w-full text-center bg-gray-500 text-black opacity-0 ${
               isHovered ? "opacity-100" : "opacity-0"
             } flex items-center justify-center transition-opacity duration-300 cursor-pointer`}
+            onClick={props.addToCart}
           >
             <span className="font-semibold p-2">Add To Cart</span>
           </div>

@@ -133,9 +133,6 @@ function Home() {
           />
         ))
       );
-
-      // Handle other data like bestSelling, categories, etc.
-      // ...
     } catch (error) {
       console.error("Error fetching products:", error);
       // Handle error
@@ -148,7 +145,20 @@ function Home() {
 
   const productsToShow = viewAllProducts ? products : products.slice(0, 10);
 
-  function addToCart() {}
+  // Function to add a product to the cart
+  const addToCart = async (productId, price, quantity, email) => {
+    const data = await Axios.post("cart", {
+      productId,
+      price,
+      quantity,
+      email,
+    });
+    console.log(data);
+    // setCart((prevCart) => ({
+    //   ...prevCart,
+    //   [productId]: prevCart[productId] ? prevCart[productId] + 1 : 1,
+    // }));
+  };
 
   // Function to navigate to the all products page
   const handleViewAllProducts = () => {
@@ -160,6 +170,7 @@ function Home() {
       <div className="bg-black">
         <Offer />
       </div>
+      {console.log(cart)}
       <div className="container">
         <Navbar />
         <Hero />
@@ -218,9 +229,7 @@ function Home() {
               </button>
             </div>
           </div>
-          <div
-            className="flex mt-10 gap-8 p-4 overflow-x-scroll scroll-smooth"
-          >
+          <div className="flex mt-10 gap-8 p-4 overflow-x-scroll scroll-smooth">
             {categories.map((item, index) => (
               <div key={index}>{item}</div>
             ))}
@@ -309,6 +318,14 @@ function Home() {
                     category={item.category}
                     stock={item.stock}
                     sell_count={item.sell_count}
+                    addToCart={() =>
+                      addToCart(
+                        item._id,
+                        item.price,
+                        1,
+                        "zarif.zeisan.mustafa@gmail.com"
+                      )
+                    }
                   />
                 </div>
               ))}
