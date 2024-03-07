@@ -8,9 +8,14 @@ function Quantity(props) {
   const [cnt, setCnt] = useState(props.quantity);
   function handleUp() {
     setCnt(cnt + 1);
+    const newTotalPrice = newCnt * props.price; // Assuming props.price is the price of the product
+    props.onQuantityChange(newCnt, newTotalPrice);
   }
   function handleDown() {
     cnt > 1 ? setCnt(cnt - 1) : setCnt(1);
+    
+    const newTotalPrice = newCnt * props.price; // Assuming props.price is the price of the product
+    props.onQuantityChange(newCnt, newTotalPrice);
   }
   return (
     <div className="Quantity">

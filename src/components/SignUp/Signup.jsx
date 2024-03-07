@@ -6,6 +6,7 @@ import Navbar from "../Navbar";
 import Footer from "../Footer";
 import Axios from "../../api/api";
 import { useNavigate } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
 // import { useHistory } from "react-router-dom";
 function Signup() {
   const navigate = useNavigate();
@@ -28,11 +29,15 @@ function Signup() {
       // history.push("/");
       // Handle response accordingly
       console.log(response,"zarif"); // Log response data or do something with it
+      toast.success("Successfully Created Account!");
     } catch (error) {
+      
       if (error.response && error.response.data && error.response.data.message) {
         console.error("Error:", error.response.data.message); // Log any errors
+        toast.error("Email already exists");
       } else {
         console.error("An unexpected error occurred:", error);
+        toast.error("Account Creation Failed");
       }
     }
   }

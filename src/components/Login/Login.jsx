@@ -5,10 +5,13 @@ import Offer from "../Offer";
 import side_bar from "../../assets/img/side_image/login.svg";
 import Axios from "../../api/api";
 import toast, { Toaster } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
+  const navigate = useNavigate();
   const handleLogin = async (e) => {
     e.preventDefault(); // Prevent default form submission
+    
     const email = e.target.email.value;
     const password = e.target.password.value;
     try {
@@ -17,8 +20,13 @@ function Login() {
         email: email,
         password: password,
       });
+// Store email in local storage
+      localStorage.setItem("userEmail", email);
+
+// Store password in local storage (not recommended for passwords due to security concerns)
       toast.success("Successfully logged in!");
       console.log("Response:", response); // Log response data or do something with it
+      navigate("/");
     } catch (error) {
       console.error("Error:", error); // Log any errors
       toast.error("Login failed. Please try again."); // Display error toast message
