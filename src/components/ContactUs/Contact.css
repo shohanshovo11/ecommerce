@@ -1,0 +1,82 @@
+.Contact .ashTxt {
+    color: #afafaf;
+
+}
+
+.Contact .middleArea {
+    display: flex;
+    justify-content: space-around;
+
+}
+
+.Contact .boldTxt {
+    font-weight: 700;
+}
+
+.Contact .threeField {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+
+}
+
+.Contact .box,
+.box3 {
+    background-color: #f5f5f5;
+    height: 40px;
+    border: 0px;
+    outline: none;
+    padding-left: 20px;
+    border-radius: 3px;
+}
+
+.Contact .box3 {
+
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.Contact .box1 {
+    background-color: #f5f5f5;
+    height: 200px;
+    width: 100%;
+    margin-top: 10px;
+    border: 0px;
+    outline: none;
+    box-sizing: border-box;
+    padding-left: 20px;
+    border-radius: 3px;
+}
+
+.Contact .redbtn {
+    background-color: red;
+    color: white;
+    height: 30px;
+    width: 150px;
+    border: 0px;
+    margin-left: 10px;
+    border-radius: 3px;
+    margin-top: 10px;
+
+}
+
+.Contact .leftPart {
+    margin: 20px;
+    padding: 25px;
+    border: solid 2px #f5f5f5;
+}
+.Contact .hrLine
+{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.Contact .rightPart {
+    margin: 20px;
+    padding: 50px;
+    border: solid 2px #f5f5f5;
+}
+
+.Contact .redBtnDiv {
+    display: flex;
+    justify-content: flex-end;
+}

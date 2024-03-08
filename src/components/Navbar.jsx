@@ -22,14 +22,14 @@ function Navbar() {
               </Link>
             </li>
             <li>
-              <a href="/" className="">
+              <Link to="/contact-us" className="">
                 Contact
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="/" className="">
+              <Link to="/about" className="">
                 About
-              </a>
+              </Link>
             </li>
             <li>
               {loggedUser === "" ? (
@@ -37,7 +37,9 @@ function Navbar() {
                   Login
                 </Link>
               ) : (
-                <div className="font-bold">{loggedUser}</div>
+                <Link to={"/account"} className="font-bold cursor-pointer">
+                  {loggedUser}
+                </Link>
               )}
             </li>
             <li>
@@ -59,38 +61,39 @@ function Navbar() {
             </li>
           </ul>
         </div>
-        <div className="hidden md:flex gap-4 pt-2">
-          <div className=" relative">
-            <input
-              type="text"
-              name=""
-              id=""
-              placeholder="Search..."
-              className="bg-[#F5F5F5] py-2 pl-4 pr-12 text-sm font-light rounded-lg focus:outline-none focus:ring-ecom-red focus:border-ecom-red transition duration-150 ease-in-out"
+        <Link to={"/wishlist"}>
+          <div className="hidden md:flex gap-4 pt-2">
+            <div className=" relative">
+              <input
+                type="text"
+                name=""
+                id=""
+                placeholder="Search..."
+                className="bg-[#F5F5F5] py-2 pl-4 pr-12 text-sm font-light rounded-lg focus:outline-none focus:ring-ecom-red focus:border-ecom-red transition duration-150 ease-in-out"
+              />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6 absolute right-3 top-2/4 transform -translate-y-2/4 text-gray-400 cursor-pointer"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <FontAwesomeIcon
+              icon={faHeart}
+              className="fa-xl self-center cursor-pointer"
             />
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6 absolute right-3 top-2/4 transform -translate-y-2/4 text-gray-400 cursor-pointer"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <circle cx="11" cy="11" r="8"></circle>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
+            <Link to="/cart" className="self-center cursor-pointer">
+              <FontAwesomeIcon icon={faCartArrowDown} className="fa-xl" />
+            </Link>
           </div>
-          <FontAwesomeIcon
-            icon={faHeart}
-            className="fa-xl self-center cursor-pointer"
-          />
-          <Link to="/cart" className="self-center cursor-pointer">
-            <FontAwesomeIcon icon={faCartArrowDown} className="fa-xl" />
-          </Link>
-        </div>
-
+        </Link>
         <div className="block lg:hidden">
           <button
             id="hamburger"
