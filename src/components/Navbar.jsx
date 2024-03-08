@@ -5,6 +5,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 function Navbar() {
+  const loggedUser = localStorage.getItem("userEmail") || "";
   return (
     <nav className="bg-white text-black pt-10">
       <div className="container flex justify-between items-center">
@@ -31,14 +32,30 @@ function Navbar() {
               </a>
             </li>
             <li>
-              <Link to="/login" className="">
-                Login
-              </Link>
+              {loggedUser === "" ? (
+                <Link to="/login" className="">
+                  Login
+                </Link>
+              ) : (
+                <div className="font-bold">{loggedUser}</div>
+              )}
             </li>
             <li>
-              <Link to="/signup" className="">
-                Sign Up
-              </Link>
+              {loggedUser === "" ? (
+                <Link to="/signup" className="">
+                  Sign Up
+                </Link>
+              ) : (
+                <div
+                  className="cursor-pointer"
+                  onClick={() => {
+                    localStorage.clear();
+                    window.location.reload();
+                  }}
+                >
+                  Logout
+                </div>
+              )}
             </li>
           </ul>
         </div>

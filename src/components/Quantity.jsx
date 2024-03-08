@@ -1,22 +1,25 @@
-import { faAngleUp } from "@fortawesome/free-solid-svg-icons";
-import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
+import { faAngleUp, faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import "./Quantity.css";
 
 function Quantity(props) {
   const [cnt, setCnt] = useState(props.quantity);
+
   function handleUp() {
-    setCnt(cnt + 1);
-    const newTotalPrice = newCnt * props.price; // Assuming props.price is the price of the product
-    props.onQuantityChange(newCnt, newTotalPrice);
+    const newCnt = cnt + 1;
+    setCnt(newCnt);
+    const newTotalPrice = newCnt * props.price;
+    props.onQuantityChange(newCnt);
   }
+
   function handleDown() {
-    cnt > 1 ? setCnt(cnt - 1) : setCnt(1);
-    
-    const newTotalPrice = newCnt * props.price; // Assuming props.price is the price of the product
-    props.onQuantityChange(newCnt, newTotalPrice);
+    const newCnt = cnt > 1 ? cnt - 1 : 1;
+    setCnt(newCnt);
+    const newTotalPrice = newCnt * props.price;
+    props.onQuantityChange(newCnt);
   }
+
   return (
     <div className="Quantity">
       <div id="counter">
@@ -28,17 +31,13 @@ function Quantity(props) {
           icon={faAngleUp}
           className="cursor-pointer"
           style={{ color: "#000000" }}
-          onClick={() => {
-            handleUp();
-          }}
+          onClick={handleUp}
         />
         <FontAwesomeIcon
           icon={faAngleDown}
           className="cursor-pointer"
           style={{ color: "#000000" }}
-          onClick={() => {
-            handleDown();
-          }}
+          onClick={handleDown}
         />
       </div>
     </div>

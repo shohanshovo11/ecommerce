@@ -19,7 +19,6 @@ import Axios from "../api/api";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 
-
 function Home() {
   const cardContainerRef = useRef(null);
   const categoriesRef = useRef(null);
@@ -285,7 +284,7 @@ function Home() {
                         item._id,
                         item.price,
                         1,
-                        "zarif.zeisan.mustafa@gmail.com"
+                        localStorage.getItem("userEmail")
                       )
                     }
                   />
