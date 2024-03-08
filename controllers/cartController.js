@@ -61,6 +61,17 @@ router.put("/:id", getCart, async (req, res) => {
   }
 });
 
+// DELETE route to delete a cart by ID
+router.delete("/:id", getCart, async (req, res) => {
+  try {
+    const x = await Cart.deleteMany({ _id: req.params.id });
+    console.log(x);
+    res.json({ message: "Cart deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 // Middleware function to get a single cart by ID
 async function getCart(req, res, next) {
   let cart;
