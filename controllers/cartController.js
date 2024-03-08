@@ -37,11 +37,27 @@ router.post("/", async (req, res) => {
 // GET all cart documents associated with a user's email
 router.get("/email/:email", async (req, res) => {
   try {
-    console.log(req.params.email, typeof req.params.email);
     const carts = await Cart.find({ email: req.params.email });
     res.json(carts);
   } catch (err) {
     res.status(500).json({ message: err.message });
+  }
+});
+
+// PUT route to update cart quantity by ID
+router.put("/:id", getCart, async (req, res) => {
+  if (req.body.quantity === undefined) {
+    return res
+      .status(400)
+      .json({ message: "Quantity is required in the request body" });
+  }
+
+  try {
+    res.cart.quantity = req.body.quantity;
+    const updatedCart = await res.cart.save();
+    res.json(updatedCart);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
   }
 });
 
