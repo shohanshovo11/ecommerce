@@ -12,6 +12,7 @@ import Error from "./components/NotFound/Error";
 import Account from "./components/Account/Account";
 import Wishlist from "./components/Wishlist/Wishlist";
 import Contact from "./components/ContactUs/Contact";
+import About from "./components/AboutUs/About";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
       <Route path="/account" element={<Account />} />
       <Route path="/wishlist" element={<Wishlist />} />
       <Route path="/contact-us" element={<Contact />} />
+      <Route path="/about-us" element={<About />} />
       <Route path="/*" element={<Error />} />
 
       {/* Add more routes as needed */}
