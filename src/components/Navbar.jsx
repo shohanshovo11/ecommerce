@@ -11,7 +11,7 @@ function Navbar() {
       <div className="container flex justify-between items-center">
         <div>
           <a href="/" className=" text-2xl font-bold">
-            T3CH-STATION
+            <span className="text-ecom-red">T3CH</span>STATION
           </a>
         </div>
         <div className="hidden lg:block">
