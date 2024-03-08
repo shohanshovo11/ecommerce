@@ -3,19 +3,17 @@ import Offer from "./Offer";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import "./Cart.css";
-import Quantity from "./Quantity"; // Import the Quantity component
+import Quantity from "./Quantity";
 import { Link } from "react-router-dom";
 import Axios from "../api/api";
 
 function Cart() {
   const [products, setProducts] = useState([]);
-
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await Axios.get(
-          `/cart/email/${localStorage.getItem("userEmail")}`
-        );
+        const response = await Axios.get(`/cart/email/${localStorage.getItem("userEmail")}`);
         setProducts(response.data);
       } catch (error) {
         console.error("Error fetching cart data:", error);
@@ -28,15 +26,11 @@ function Cart() {
   const handleQuantityChange = async (productId, newQuantity, product) => {
     try {
       console.log(product, "product");
-      // Send Axios request to update quantity in the backend
       await Axios.put(`/cart/${productId}`, { quantity: newQuantity });
 
-      // Update local state with the updated quantity
-      setProducts((prevProducts) =>
-        prevProducts.map((product) =>
-          product._id === productId
-            ? { ...product, quantity: newQuantity }
-            : product
+      setProducts(prevProducts =>
+        prevProducts.map(item =>
+          item._id === productId ? { ...item, quantity: newQuantity } : item
         )
       );
     } catch (error) {
@@ -44,7 +38,6 @@ function Cart() {
     }
   };
 
-  // Calculate subtotal based on updated products state
   const subtotal = products.reduce(
     (acc, product) => acc + product.price * product.quantity,
     0
@@ -93,23 +86,18 @@ function Cart() {
                 </tr>
               </thead>
               <tbody>
-                {products.map((product) => (
+                {products.map(product => (
                   <tr className="rows" key={product._id}>
                     <td className=" mr-4">
-                      <img className="w-8" src={product.productId.image} />
+                      <img className="w-8" src={product.productId.image} alt={product.productId.name} />
                     </td>
                     <td className="cell">{product.productId.name}</td>
                     <td className="cell">${product.price.toFixed(2)}</td>
                     <td className="cell">
-                      {/* Use Quantity component here */}
                       <Quantity
                         quantity={product.quantity}
-                        onQuantityChange={(newQuantity) =>
-                          handleQuantityChange(
-                            product._id,
-                            newQuantity,
-                            product
-                          )
+                        onQuantityChange={newQuantity =>
+                          handleQuantityChange(product._id, newQuantity, product)
                         }
                       />
                     </td>
@@ -139,8 +127,7 @@ function Cart() {
             <div id="receipt-header">Card Total</div>
             <div className="receipt-rows">
               <div>Subtotal:</div>
-              <div>${subtotal.toFixed(2)}</div>{" "}
-              {/* Use the calculated subtotal here */}
+              <div>${subtotal.toFixed(2)}</div>
             </div>
             <div className="under-line" />
             <div className="receipt-rows">
@@ -150,8 +137,7 @@ function Cart() {
             <div className="under-line" />
             <div className="receipt-rows">
               <div>Total:</div>
-              <div>${subtotal.toFixed(2)}</div>{" "}
-              {/* Use the calculated subtotal here */}
+              <div>${subtotal.toFixed(2)}</div>
             </div>
             <Link
               to={{

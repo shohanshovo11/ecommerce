@@ -198,33 +198,6 @@ function Billing() {
               )}
             </div>
             <div className="flex flex-col gap-2">
-              <div className="flex justify-between mb-2">
-                <h2>Subtotal: </h2>
-                <h2>${total}</h2>
-              </div>
-              <hr className="border-black border-1 opacity-30"></hr>
-              <div className="flex justify-between mb-2">
-                <h2>Shipping: </h2>
-                <h2>Free</h2>
-              </div>
-              <hr className="border-black border-1 opacity-30"></hr>
-              <div className="flex justify-between mb-2">
-                <h2>Total: </h2>
-                <h2>${total}</h2>
-              </div>
-              <div className="flex mb-4">
-                <Radio
-                  // checked={selectedValue === "a"}
-                  // onChange={handleChange}
-                  value="a"
-                  name="radio-buttons"
-                  inputProps={{ "aria-label": "A" }}
-                />
-                <label className="self-center">Cash On Delivery</label>
-              </div>
-
-              {/* <h2>Shipping: </h2> */}
-              {/* <h2>Total: </h2> */}
             </div>
             <div className="flex gap-4 justify-center items-center">
               <Input label="Coupon Code" className="" size="lg" />
