@@ -198,8 +198,6 @@ function Billing() {
               )}
             </div>
             <div className="flex flex-col gap-2">
-              {/* Display subtotal, shipping, and total */}
-              <button className="btn-primary mt-6">Place Order</button>
             </div>
             <div className="flex gap-4 justify-center items-center">
               <Input label="Coupon Code" className="" size="lg" />
