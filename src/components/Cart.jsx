@@ -50,6 +50,25 @@ function Cart() {
     0
   );
 
+  // Conditionally render "Add Products to Cart" message if products array is empty
+  if (products.length === 0) {
+    return (
+      <div className="Cart">
+        <div className="container">
+          <Navbar />
+          <div
+            id="empty-cart-message"
+            className="text-5xl text-center flex items-center justify-center h-72"
+          >
+            Add Products to Cart
+          </div>
+          <Footer />
+        </div>
+      </div>
+    );
+  }
+
+  // Render the cart if products array is not empty
   return (
     <div className="Cart">
       <div className="bg-black">
@@ -135,7 +154,10 @@ function Cart() {
               {/* Use the calculated subtotal here */}
             </div>
             <Link
-              to="/billing"
+              to={{
+                pathname: "/billing",
+                state: { products: products },
+              }}
               id="apply-coupon"
               className="w-2/3 text-center self-center"
             >

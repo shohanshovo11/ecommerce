@@ -1,50 +1,101 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Offer from "../Offer";
 import Navbar from "../Navbar";
 import Footer from "../Footer";
-import product1 from "../../assets/img/flash-sales/flash-sales-2.svg";
-import product2 from "../../assets/img/flash-sales/flash-sales-3.svg";
-import product3 from "../../assets/img/flash-sales/flash-sales-4.svg";
 import { Input, Radio } from "@material-tailwind/react";
+import Axios from "../../api/api";
+import { useNavigate } from "react-router-dom";
+
 function Billing() {
-  const [products, setProducts] = useState([
-    {
-      name: "A4Tech Controller",
-      src: product1,
-      price: 200,
-    },
-    {
-      name: "LG Monitor",
-      src: product2,
-      price: 200,
-    },
-    {
-      name: "Chair",
-      src: product3,
-      price: 300,
-    },
-    {
-      name: "Product 3",
-      src: product3,
-      price: 300,
-    },
-    {
-      name: "Product 3",
-      src: product3,
-      price: 300,
-    },
-    {
-      name: "Product 3",
-      src: product3,
-      price: 300,
-    },
-    {
-      name: "Product 3",
-      src: product3,
-      price: 300,
-    },
-  ]);
+  const [products, setProducts] = useState([]);
+  const [productData, setProductData] = useState([]);
+  const [cart, setCart] = useState([]);
+  const navigate = useNavigate();
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await Axios.get(
+          `/cart/email/${localStorage.getItem("userEmail")}`
+        );
+        setCart(response.data);
+        const transformedData = response.data.map((product) => ({
+          name: product.productId.name,
+          price: product.productId.price,
+          quantity: product.quantity,
+          src: product.productId.image,
+        }));
+        setCart(response.data);
+        console.log(transformedData, "shohan");
+        setProductData(transformedData);
+        setProducts(transformedData);
+      } catch (error) {
+        console.error("Error fetching cart data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
   let total = 0;
+
+  const handlePlaceOrder = async (e) => {
+    e.preventDefault();
+
+    // Capture form field values
+    const name = e.target.name.value;
+    const address = e.target.address.value;
+    const city = e.target.city.value;
+    const postal = e.target.postal.value;
+    const country = e.target.country.value;
+    const phone = e.target.phone.value;
+
+    // Validate form fields
+    if (!name || !address || !city || !postal || !country || !phone) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
+    const userEmail = localStorage.getItem("userEmail");
+    if (!userEmail) {
+      alert("Please login to place the order.");
+      return;
+    }
+
+    // Prepare order data
+    const orderData = {
+      userEmail,
+      products,
+      total,
+      name,
+      address,
+      city,
+      postal,
+      country,
+      phone,
+      // Add other necessary order details
+    };
+
+    // Send order data to backend
+    Axios.post("orders", orderData)
+      .then((response) => {
+        console.log("Order placed successfully:", response.data);
+        alert("Order placed successfully!");
+      })
+      .catch((error) => {
+        console.error("Error placing order:", error);
+        alert("Error placing order. Please try again later.");
+      });
+    async function deleteCart() {
+      cart.forEach((product) => {
+        Axios.delete(`cart/${product._id}`)
+          .then((data) => {
+            navigate("/");
+          })
+          .catch();
+      });
+    }
+    await deleteCart();
+  };
+
   return (
     <>
       <Offer />
@@ -53,7 +104,10 @@ function Billing() {
         <h2 className="font-semibold text-4xl mb-10 mt-16">Billing Details</h2>
         <div className="flex gap-60">
           <div className="flex-1">
-            <form className="flex flex-col gap-5">
+            <form
+              className="flex flex-col gap-5"
+              onSubmit={(e) => handlePlaceOrder(e)}
+            >
               <div className="flex flex-col gap-2">
                 <label htmlFor="name" className="text-[#000] opacity-40">
                   Name
@@ -120,20 +174,24 @@ function Billing() {
                   className="bg-[#f5f5f5] outline-none rounded-sm px-2 py-1 "
                 />
               </div>
+              <button className="btn-primary mt-6">Place Order</button>
             </form>
           </div>
           <div className="flex-1">
             <div className="flex flex-col gap-6 mb-8  overflow-auto h-96 pr-10">
               {products.map(
                 (product) => (
-                  (total += product.price),
+                  (total += product.price * product.quantity),
                   (
                     <div className="flex justify-between" key={product.id}>
                       <div className="flex gap-4">
                         <img src={product.src} alt="" className="w-12 h-12" />
                         <h2 className="self-center">{product.name}</h2>
                       </div>
-                      <h2 className="self-center">${product.price}</h2>
+                      <h2 className="self-center">
+                        {product.quantity} X ${product.price} ={" $"}
+                        {product.quantity * product.price}
+                      </h2>
                     </div>
                   )
                 )
@@ -172,7 +230,6 @@ function Billing() {
               <Input label="Coupon Code" className="" size="lg" />
               <button className="btn-primary h-12">Apply</button>
             </div>
-            <button className="btn-primary mt-6">Place Order</button>
           </div>
         </div>
       </div>
