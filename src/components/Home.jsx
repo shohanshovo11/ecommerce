@@ -51,54 +51,63 @@ function Home() {
   let productsData = [];
   async function fetchData() {
     try {
-      const products = await Axios.get("product");
-      productsData = products.data;
-      if (products.status === 200 && products.data.length > 0) {
-        setProducts(products.data);
+      const productsResponse = await Axios.get("product");
+      const fetchedProducts = productsResponse.data;
+  
+      if (productsResponse.status === 200 && fetchedProducts.length > 0) {
+        setProducts(fetchedProducts);
+  
+        // Sort products based on sell_count and stock
+        const sortedBySellCount = [...fetchedProducts].sort((a, b) => b.sell_count - a.sell_count);
+        const sortedByStock = [...fetchedProducts].sort((a, b) => a.stock - b.stock);
+  
+        // Set bestSelling with top 10 products based on sell_count
+        setBestSelling(
+          sortedBySellCount.slice(0, 10).map(item => (
+            <Card
+              key={item._id}
+              id={item._id}
+              name={item.name}
+              price={item.price}
+              previous_price={item.previous_price}
+              rating={item.rating}
+              image={item.image}
+              category={item.category}
+              stock={item.stock}
+              sell_count={item.sell_count}
+            />
+          ))
+        );
+  
+        // Set flashSales with top 10 products based on stock
+        setFlashSales(
+          sortedByStock.slice(0, 10).map(item => (
+            <Card
+              key={item._id}
+              id={item._id}
+              name={item.name}
+              price={item.price}
+              previous_price={item.previous_price}
+              rating={item.rating}
+              image={item.image}
+              category={item.category}
+              stock={item.stock}
+              sell_count={item.sell_count}
+            />
+          ))
+        );
       }
     } catch (error) {
       console.error("Error fetching products:", error);
     }
+  
     let tmpCategories = [];
     for (let i = 0; i < 8; i++) {
       tmpCategories.push(<CategoryCard />);
     }
     setCategories(tmpCategories);
-    const topProducts = productsData.slice(0, 10);
-    setBestSelling(
-      topProducts.map((item) => (
-        <Card
-          key={item._id}
-          id={item._id}
-          name={item.name}
-          price={item.price}
-          previous_price={item.previous_price}
-          rating={item.rating}
-          image={item.image}
-          category={item.category}
-          stock={item.stock}
-          sell_count={item.sell_count}
-        />
-      ))
-    );
-
-    setFlashSales(
-      topProducts.map((item) => (
-        <Card
-          key={item._id}
-          id={item._id}
-          name={item.name}
-          price={item.price}
-          previous_price={item.previous_price}
-          rating={item.rating}
-          image={item.image}
-          category={item.category}
-          stock={item.stock}
-          sell_count={item.sell_count}
-        />
-      ))
-    );
   }
+  
 
   useEffect(() => {
     fetchData();
